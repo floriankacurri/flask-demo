@@ -30,12 +30,9 @@ HTML = """
 <style>
   :root {
     --bg: #050810;
-    --surface: #0c1120;
     --border: #1a2540;
     --accent: #00e5ff;
     --accent2: #7c3aed;
-    --success: #00ff87;
-    --warn: #ffbe0b;
     --text: #e8eaf6;
     --muted: #4a5580;
     --font-display: 'Syne', sans-serif;
@@ -49,10 +46,12 @@ HTML = """
     color: var(--text);
     font-family: var(--font-mono);
     min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow-x: hidden;
   }
 
-  /* Grid background */
   body::before {
     content: '';
     position: fixed;
@@ -65,7 +64,6 @@ HTML = """
     z-index: 0;
   }
 
-  /* Glow orb */
   body::after {
     content: '';
     position: fixed;
@@ -82,15 +80,13 @@ HTML = """
   .container {
     position: relative;
     z-index: 1;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 40px 24px 80px;
+    max-width: 700px;
+    width: 100%;
+    padding: 24px;
+    text-align: center;
   }
 
-  /* Header */
   header {
-    text-align: center;
-    padding: 60px 0 50px;
     animation: fadeDown 0.8s ease both;
   }
 
@@ -118,7 +114,7 @@ HTML = """
 
   h1.title {
     font-family: var(--font-display);
-    font-size: clamp(36px, 6vw, 72px);
+    font-size: clamp(40px, 7vw, 80px);
     font-weight: 800;
     line-height: 1.05;
     letter-spacing: -0.03em;
@@ -126,305 +122,36 @@ HTML = """
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
   }
 
   .subtitle {
     color: var(--muted);
     font-size: 13px;
     letter-spacing: 0.05em;
-    max-width: 480px;
-    margin: 0 auto;
-    line-height: 1.8;
+    line-height: 1.9;
   }
 
-  /* Metrics row */
-  .metrics {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    margin-bottom: 40px;
-    animation: fadeUp 0.8s 0.2s ease both;
-  }
-
-  .metric {
-    background: var(--surface);
-    padding: 24px 20px;
-    text-align: center;
-    transition: background 0.2s;
-  }
-
-  .metric:hover { background: #101828; }
-
-  .metric-value {
-    font-family: var(--font-display);
-    font-size: 32px;
-    font-weight: 800;
-    color: var(--accent);
-    display: block;
-    margin-bottom: 4px;
-  }
-
-  .metric-label {
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  /* Pipeline */
-  .section-title {
-    font-family: var(--font-display);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .section-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  .pipeline {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    margin-bottom: 40px;
-    animation: fadeUp 0.8s 0.3s ease both;
-  }
-
-  .stage {
-    background: var(--surface);
-    padding: 28px 16px;
-    text-align: center;
-    position: relative;
-    cursor: default;
-    transition: background 0.25s;
-  }
-
-  .stage:hover { background: #101828; }
-
-  .stage.active { background: rgba(0,229,255,0.05); }
-  .stage.active .stage-icon { color: var(--accent); }
-  .stage.active .stage-status { background: rgba(0,229,255,0.15); color: var(--accent); }
-
-  .stage.done .stage-icon { color: var(--success); }
-  .stage.done .stage-status { background: rgba(0,255,135,0.1); color: var(--success); }
-
-  .stage-num {
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    margin-bottom: 12px;
-  }
-
-  .stage-icon {
-    font-size: 28px;
-    display: block;
-    margin-bottom: 12px;
-    color: var(--muted);
-    transition: color 0.3s;
-  }
-
-  .stage-name {
-    font-family: var(--font-display);
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 6px;
-    color: var(--text);
-  }
-
-  .stage-desc {
-    font-size: 10px;
-    color: var(--muted);
-    line-height: 1.6;
-    margin-bottom: 14px;
-  }
-
-  .stage-status {
-    display: inline-block;
-    font-size: 9px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 2px;
-    background: rgba(74,85,128,0.2);
-    color: var(--muted);
-    transition: all 0.3s;
-  }
-
-  /* Connector arrows between stages */
-  .stage:not(:last-child)::after {
-    content: '→';
-    position: absolute;
-    right: -10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--muted);
-    font-size: 14px;
-    z-index: 2;
-    background: var(--border);
-    padding: 2px 1px;
-  }
-
-  /* Simulate button */
-  .controls {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 40px;
-    animation: fadeUp 0.8s 0.4s ease both;
-  }
-
-  .btn {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 12px 24px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text);
-    cursor: pointer;
-    transition: all 0.2s;
-    border-radius: 2px;
-  }
-
-  .btn:hover { border-color: var(--accent); color: var(--accent); }
-
-  .btn-primary {
-    background: var(--accent);
-    color: #000;
-    border-color: var(--accent);
-    font-weight: 700;
-  }
-
-  .btn-primary:hover { background: #00c4db; color: #000; border-color: #00c4db; }
-  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
-
-  /* Log terminal */
-  .log-section { animation: fadeUp 0.8s 0.5s ease both; }
-
-  .terminal {
-    background: #020408;
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-
-  .terminal-header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 10px 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .terminal-dots { display: flex; gap: 6px; }
-  .dot { width: 10px; height: 10px; border-radius: 50%; }
-  .dot-r { background: #ff5f57; }
-  .dot-y { background: #febc2e; }
-  .dot-g { background: #28c840; }
-
-  .terminal-title {
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-  }
-
-  .terminal-body {
-    padding: 20px;
-    min-height: 200px;
-    max-height: 320px;
-    overflow-y: auto;
-    font-size: 12px;
-    line-height: 2;
-  }
-
-  .log-line {
-    display: flex;
-    gap: 12px;
-    opacity: 0;
-    animation: logAppear 0.3s ease forwards;
-  }
-
-  .log-time { color: var(--muted); min-width: 80px; }
-  .log-msg { color: #a8c8ff; }
-  .log-msg.success { color: var(--success); }
-  .log-msg.error { color: #ff4d6d; }
-  .log-msg.warn { color: var(--warn); }
-  .log-msg.info { color: var(--accent); }
-
-  /* Thank you */
   .thankyou {
-    text-align: center;
-    padding: 60px 0 20px;
+    margin-top: 60px;
     animation: fadeUp 1s ease both;
   }
 
-  /* h1.faleminderit { display: none; } */
-
-  /* Footer */
-  footer {
-    text-align: center;
-    padding: 40px 0 0;
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    border-top: 1px solid var(--border);
-    margin-top: 60px;
-  }
-
-  /* Animations */
   @keyframes fadeDown {
     from { opacity: 0; transform: translateY(-20px); }
     to   { opacity: 1; transform: translateY(0); }
   }
+
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0); }
   }
+
   @keyframes pulse {
     0%, 100% { opacity: 1; }
     50%       { opacity: 0.3; }
   }
-  @keyframes logAppear {
-    to { opacity: 1; }
-  }
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-
-  .spinner {
-    display: inline-block;
-    width: 12px; height: 12px;
-    border: 2px solid var(--muted);
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    vertical-align: middle;
-    margin-right: 6px;
-  }
-
-  @media (max-width: 768px) {
-    .metrics { grid-template-columns: repeat(2, 1fr); }
-    .pipeline { grid-template-columns: 1fr; }
-    .stage:not(:last-child)::after { content: '↓'; right: 50%; top: auto; bottom: -12px; transform: translateX(50%); }
-  }
-</style>
-</head>
+</style></head>
 <body>
 <div class="container">
 
@@ -441,8 +168,9 @@ HTML = """
   </header>
 
   <div class="thankyou">
-     <h1 class="faleminderit" style="font-family:'Syne',sans-serif;font-size:clamp(48px,8vw,96px);font-weight:800;background:linear-gradient(135deg,#fff 20%,#00e5ff 60%,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.03em;">Faleminderit</h1>
+    <!-- <h1 class="faleminderit" style="font-family:'Syne',sans-serif;font-size:clamp(48px,8vw,96px);font-weight:800;background:linear-gradient(135deg,#fff 20%,#00e5ff 60%,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.03em;">Faleminderit</h1> -->
   </div>
+
 </div>
 </body>
 </html>
