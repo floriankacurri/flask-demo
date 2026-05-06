@@ -166,9 +166,6 @@ HTML = """
 def home():
     return render_template_string(
         HTML,
-        stages=PIPELINE_STAGES,
-        metrics=METRICS,
-        year=datetime.now().year
     )
 
 @app.route("/health")
