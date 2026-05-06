@@ -8,7 +8,7 @@ def home():
 
 @app.route("/health")
 def health():
-    return jsonify({"status": "healthy"}), 200
+    return jsonify({"status": "Healthy"}), 200
 
 @app.route("/add/<int:a>/<int:b>")
 def add(a, b):
