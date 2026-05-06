@@ -12,7 +12,8 @@ def health():
 
 @app.route("/add/<int:a>/<int:b>")
 def add(a, b):
-    return jsonify({"result": a + b})
+    result = a + b
+    return jsonify({"result": result})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
