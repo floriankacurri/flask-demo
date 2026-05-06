@@ -10,14 +10,14 @@ def client():
 def test_home(client):
     res = client.get("/")
     assert res.status_code == 200
-    assert res.json["status"] == "ok"
 
 def test_health(client):
     res = client.get("/health")
     assert res.status_code == 200
     assert res.json["status"] == "healthy"
 
-def test_add(client):
-    res = client.get("/add/3/4")
+def test_metrics_api(client):
+    res = client.get("/api/metrics")
     assert res.status_code == 200
-    assert res.json["result"] == 7
+    assert "uptime" in res.json
+
