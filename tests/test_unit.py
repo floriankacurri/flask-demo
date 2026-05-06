@@ -15,9 +15,3 @@ def test_health(client):
     res = client.get("/health")
     assert res.status_code == 200
     assert res.json["status"] == "healthy"
-
-def test_metrics_api(client):
-    res = client.get("/api/metrics")
-    assert res.status_code == 200
-    assert "uptime" in res.json
-

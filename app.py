@@ -172,11 +172,6 @@ def home():
 def health():
     return jsonify({"status": "healthy"}), 200
 
-@app.route("/api/metrics")
-def metrics():
-    METRICS["deployments_today"] = random.randint(12, 40)
-    METRICS["tests_passed"] = random.randint(200, 500)
-    return jsonify(METRICS)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
