@@ -66,7 +66,6 @@ HTML = """
   .container {
     position: relative;
     z-index: 1;
-    max-width: 700px;
     width: 100%;
     padding: 24px;
     text-align: center;
