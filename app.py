@@ -4,20 +4,6 @@ import random
 
 app = Flask(__name__)
 
-PIPELINE_STAGES = [
-    {"id": 1, "name": "Code Push", "icon": "⬆", "description": "Zhvilluesi bën push në GitHub"},
-    {"id": 2, "name": "Lint & Format", "icon": "✦", "description": "Kontrolli i stilit të kodit"},
-    {"id": 3, "name": "Unit Tests", "icon": "◈", "description": "Ekzekutimi i testeve automatike"},
-    {"id": 4, "name": "Build", "icon": "⬡", "description": "Ndërtimi i artefaktit"},
-    {"id": 5, "name": "Deploy", "icon": "◎", "description": "Shpërndarje automatike në prodhim"},
-]
-
-METRICS = {
-    "deployments_today": 0,
-    "tests_passed": 0,
-    "uptime": "99.98%",
-    "avg_pipeline_time": "2m 34s",
-}
 
 HTML = """
 <!DOCTYPE html>
