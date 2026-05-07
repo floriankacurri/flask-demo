@@ -153,7 +153,7 @@ HTML = """
   </header>
 
   <div class="thankyou">
-    <!-- <h1 class="faleminderit" style="font-family:'Syne',sans-serif;font-size:clamp(48px,8vw,96px);font-weight:800;background:linear-gradient(135deg,#fff 20%,#00e5ff 60%,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.03em;">Faleminderit</h1> -->
+    <h1 class="faleminderit" style="font-family:'Syne',sans-serif;font-size:clamp(48px,8vw,96px);font-weight:800;background:linear-gradient(135deg,#fff 20%,#00e5ff 60%,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.03em;">Faleminderit</h1>
   </div>
 
 </div>
